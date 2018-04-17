@@ -11,7 +11,7 @@ tensorflow 1.4
 v2 版本比 v1 版本增加了模型的保存和继续训练
 '''
 
-CKPT_DIR = 'ckpt'
+CKPT_DIR = 'ckpt'                                   # 模型存储位置
 
 
 class Train:
@@ -25,7 +25,7 @@ class Train:
         batch_size = 64                             # batch_size 是指每次迭代训练，传入训练的图片张数。
                                                     # 数据集小，可以使用全数据集，数据大的情况下，
                                                     # 为了提高训练速度，用随机抽取的n张图片来训练，效果与全数据集相近
-        train_step = 100000                         # 总的训练次数
+        train_step = 10000                          # 总的训练次数
 
         step = 0                                    # 记录训练次数, 初始化为0
 
@@ -35,6 +35,8 @@ class Train:
                                                     # max_to_keep 用来设置最多保存多少个模型，默认是5
                                                     # 如果保存的模型超过这个值，最旧的模型将被删除
 
+        # 开始训练前，检查ckpt文件夹，看是否有checkpoint文件存在。
+        # 如果存在，则读取checkpoint文件指向的模型，restore到sess中。
         ckpt = tf.train.get_checkpoint_state(CKPT_DIR)  # check point
                                                         # Returns a CheckpointState if the state was available, None otherwise.
         if ckpt and ckpt.model_checkpoint_path:

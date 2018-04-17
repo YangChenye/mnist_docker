@@ -25,19 +25,18 @@ class Predict:
         self.restore()
 
     def restore(self):
-        saver = tf.train.Saver()
-        ckpt = tf.train.get_checkpoint_state(CKPT_DIR)
+        saver = tf.train.Saver()                                    # tf.train.Saver是用来保存训练结果的。
+        ckpt = tf.train.get_checkpoint_state(CKPT_DIR)              # check point
         if ckpt and ckpt.model_checkpoint_path:
-            saver.restore(self.sess, ckpt.model_checkpoint_path)
+            saver.restore(self.sess, ckpt.model_checkpoint_path)    # 加载已经训练好的模型
         else:
             raise FileNotFoundError("未保存任何模型")
 
     def predict(self, image_path):
-        # 读图片并转为黑白的
-        img = Image.open(image_path).convert('L')
-        flatten_img = np.reshape(img, 784)
+        img = Image.open(image_path).convert('L')                   # 读图片并转为黑白的
+        flatten_img = np.reshape(img, 784)                          # 将28X28矩阵改成一个784维向量
         x = np.array([1 - flatten_img])
-        y = self.sess.run(self.net.y, feed_dict={self.net.x: x})
+        y = self.sess.run(self.net.y, feed_dict={self.net.x: x})    # 测试结果
 
         # 因为x只传入了一张图片，取y[0]即可
         # np.argmax()取得独热编码最大值的下标，即代表的数字
@@ -47,6 +46,5 @@ class Predict:
 
 if __name__ == "__main__":
     app = Predict()
-    app.predict('./test_images/0.png')
-    app.predict('./test_images/1.png')
-    app.predict('./test_images/4.png')
+    for i in range(10):
+        app.predict('./test_images/%d.png' %i)
