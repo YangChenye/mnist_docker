@@ -15,7 +15,7 @@ from cassandra.query import SimpleStatement
 KEYSPACE = "mykeyspace"
 
 def createKeySpace():
-    cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
     session = cluster.connect()
 
     log.info("Creating keyspace...")
@@ -41,14 +41,45 @@ def createKeySpace():
         log.error("Unable to create keyspace")
         log.error(e)
 
-createKeySpace();
+createKeySpace()
+
+
+#use python to delete the created table
+
+def deleteTable():
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
+    session = cluster.connect()
+
+    log.info("setting keyspace...")
+    session.set_keyspace(KEYSPACE)
+
+    try:
+        log.info("Deleting a table...")
+        session.execute('''DROP TABLE mytable''')
+    except Exception as e:
+        log.error("Unable to delete a table")
+        log.error(e)
+
+
+#use python to delete the created keyspace
+
+def deleteKeyspace():
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
+    session = cluster.connect()
+
+    try:
+        log.info("Deleting a keyspace...")
+        session.execute('''DROP KEYSPACE %s''' % KEYSPACE)
+    except Exception as e:
+        log.error("Unable to delete a keyspace")
+        log.error(e)
 
 
 
 #use python to insert a few records in our table
 
 def insertData(number):
-    cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
     session = cluster.connect()
 
     log.info("setting keyspace...")
@@ -60,19 +91,18 @@ def insertData(number):
     """)
 
     for i in range(number):
-        if(i%100 == 0):
+        if(i%5 == 0):
             log.info("inserting row %d" % i)
         session.execute(prepared.bind(("rec_key_%d" % i, 'aaa', 'bbb')))
 
-insertData(1000)
-
+insertData(20)
 
 
 
 #Reading the freshly inserted data is not that difficult using a function similar to the one below:
 
 def readRows():
-    cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
     session = cluster.connect()
 
     log.info("setting keyspace...")
@@ -86,7 +116,7 @@ def readRows():
     for row in rows:
         if(count%100==0):
             log.info('\t'.join(row))
-        count=count+1;
+        count=count+1
 
     log.info("Total")
     log.info("-----")
