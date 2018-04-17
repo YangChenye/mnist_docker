@@ -1,5 +1,4 @@
-#Use the following python program in order to create a keyspace and a table inside it.
-
+'''Use the following python program in order to create a keyspace and a table inside it.'''
 import logging
 
 log = logging.getLogger()

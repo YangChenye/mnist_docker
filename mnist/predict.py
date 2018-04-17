@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-from mnist_train_predict.model import Network
+from mnist.model import Network
 
 '''
 python 3.6
@@ -45,7 +45,3 @@ class Predict:
         return np.argmax(y[0])
 
 
-if __name__ == "__main__":
-    app = Predict()
-    for i in range(10):
-        app.predict('./test_images/%d.png' %i)

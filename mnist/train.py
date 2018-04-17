@@ -1,6 +1,6 @@
 import tensorflow as tf
-from tensorflow.examples.tutorials.mnist import input_data
-from mnist_train_predict.model import Network
+from mnist import input_data
+from mnist.model import Network
 
 '''
 python 3.6
@@ -73,7 +73,3 @@ class Train:
         print("准确率: %.2f，共测试了%d张图片 " % (accuracy, len(test_label)))
 
 
-if __name__ == "__main__":
-    app = Train()
-    app.train()
-    app.calculate_accuracy()
