@@ -42,6 +42,7 @@ class Predict:
         # np.argmax()取得独热编码最大值的下标，即代表的数字
         print(image_path)
         print('        -> Predict digit', np.argmax(y[0]))
+        return np.argmax(y[0])
 
 
 if __name__ == "__main__":

@@ -33,7 +33,7 @@ def createKeySpace():
             CREATE TABLE mytable (
                 mykey text,
                 col1 text,
-                col2 text,
+                col2 int,
                 PRIMARY KEY (mykey, col1)
             )
             """)
@@ -76,9 +76,9 @@ def deleteKeyspace():
 
 
 
-#use python to insert a few records in our table
-
-def insertData(number):
+'''use python to insert a few records in our table'''
+# 插入识别图片的时间戳time、文件名name、识别结果value
+def insertData(time, name, value):
     cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
     session = cluster.connect()
 
@@ -90,12 +90,14 @@ def insertData(number):
     VALUES (?, ?, ?)
     """)
 
-    for i in range(number):
-        if(i%5 == 0):
-            log.info("inserting row %d" % i)
-        session.execute(prepared.bind(("rec_key_%d" % i, 'aaa', 'bbb')))
+    log.info("inserting into mytable")
+    session.execute(prepared.bind((time, name, value)))
 
-insertData(20)
+    # for i in range(number):
+    #     if(i%5 == 0):
+    #         log.info("inserting row %d" % i)
+    #     session.execute(prepared.bind(("rec_key_%d" % i, 'aaa', 'bbb')))
+
 
 
 
