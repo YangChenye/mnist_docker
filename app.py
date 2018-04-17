@@ -12,10 +12,10 @@ from cassandra import ConsistencyLevel
 from cassandra.cluster import Cluster
 from cassandra.query import SimpleStatement
 
-KEYSPACE = "mykeyspace"
+KEYSPACE = "mykeyspaceForMnist"
 
 def createKeySpace():
-    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
     session = cluster.connect()
 
     log.info("Creating keyspace...")
@@ -41,13 +41,13 @@ def createKeySpace():
         log.error("Unable to create keyspace")
         log.error(e)
 
-createKeySpace()
+# createKeySpace()
 
 
-#use python to delete the created table
+'''use python to delete the created table'''
 
 def deleteTable():
-    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
     session = cluster.connect()
 
     log.info("setting keyspace...")
@@ -61,10 +61,10 @@ def deleteTable():
         log.error(e)
 
 
-#use python to delete the created keyspace
+'''use python to delete the created keyspace'''
 
 def deleteKeyspace():
-    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
     session = cluster.connect()
 
     try:
@@ -78,8 +78,9 @@ def deleteKeyspace():
 
 '''use python to insert a few records in our table'''
 # 插入识别图片的时间戳time、文件名name、识别结果value
+
 def insertData(time, name, value):
-    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
     session = cluster.connect()
 
     log.info("setting keyspace...")
@@ -92,19 +93,21 @@ def insertData(time, name, value):
 
     log.info("inserting into mytable")
     session.execute(prepared.bind((time, name, value)))
+    # session.execute('''insert into mykeyspace.mytable(mykey,col1,col2) values(%s,%s,%d)''' %(time, name, value))
 
     # for i in range(number):
     #     if(i%5 == 0):
     #         log.info("inserting row %d" % i)
     #     session.execute(prepared.bind(("rec_key_%d" % i, 'aaa', 'bbb')))
 
+# insertData("2018.4.17", "1.png", 1)
+# insertData(20)
 
 
-
-#Reading the freshly inserted data is not that difficult using a function similar to the one below:
+'''Reading the freshly inserted data is not that difficult using a function similar to the one below:'''
 
 def readRows():
-    cluster = Cluster(contact_points=['127.0.0.1'],port=9142)
+    cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
     session = cluster.connect()
 
     log.info("setting keyspace...")

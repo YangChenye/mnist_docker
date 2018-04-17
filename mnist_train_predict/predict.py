@@ -12,7 +12,7 @@ pillow(PIL) 4.3.0
 输入是28 * 28像素的图片，输出是个具体的数字
 '''
 
-CKPT_DIR = 'mnist_train_predict.ckpt'
+CKPT_DIR = 'mnist_train_predict/ckpt'
 
 
 class Predict:
