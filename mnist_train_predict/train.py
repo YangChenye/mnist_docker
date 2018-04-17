@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-from model import Network
+from mnist_train_predict.model import Network
 
 '''
 python 3.6
@@ -11,7 +11,7 @@ tensorflow 1.4
 v2 版本比 v1 版本增加了模型的保存和继续训练
 '''
 
-CKPT_DIR = 'ckpt'                                   # 模型存储位置
+CKPT_DIR = 'mnist_train_predict/ckpt'               # 模型存储位置
 
 
 class Train:
@@ -19,7 +19,7 @@ class Train:
         self.net = Network()
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
-        self.data = input_data.read_data_sets('./data_set', one_hot=True)
+        self.data = input_data.read_data_sets('mnist_train_predict/data_set', one_hot=True)
 
     def train(self):
         batch_size = 64                             # batch_size 是指每次迭代训练，传入训练的图片张数。

@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-from model import Network
+from mnist_train_predict.model import Network
 
 '''
 python 3.6
@@ -12,7 +12,7 @@ pillow(PIL) 4.3.0
 输入是28 * 28像素的图片，输出是个具体的数字
 '''
 
-CKPT_DIR = 'ckpt'
+CKPT_DIR = 'mnist_train_predict.ckpt'
 
 
 class Predict:

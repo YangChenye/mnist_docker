@@ -9,6 +9,7 @@ app.calculate_accuracy()
 
 app = predictMnist.Predict()
 for i in range(10):
-    cassandra.insertData('2018.4.17.%d' %i, './test_images/%d.png' % i, app.predict('./test_images/%d.png' % i))
+    a = app.predict('mnist_train_predict/test_images/%d.png' %i)
+    cassandra.insertData('2018.4.17.%d' %i, '%d.png' %i, a)
 
 
