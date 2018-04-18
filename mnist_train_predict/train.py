@@ -19,7 +19,7 @@ class Train:
         self.net = Network()
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
-        self.data = input_data.read_data_sets('mnist_train_predict/data_set', one_hot=True)
+        self.data = input_data.read_data_sets('data_set', one_hot=True)
 
     def train(self):
         batch_size = 64                             # batch_size 是指每次迭代训练，传入训练的图片张数。

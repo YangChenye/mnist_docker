@@ -11,15 +11,16 @@ tensorflow 1.4
 v2 版本比 v1 版本增加了模型的保存和继续训练
 '''
 
-CKPT_DIR = 'ckpt'                                   # 模型存储位置
+# CKPT_DIR = 'ckpt'                                   # 模型存储位置
 
 
 class Train:
-    def __init__(self):
+    def __init__(self, CKPT_DIR):
+        self.CKPT_DIR = CKPT_DIR
         self.net = Network()
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
-        self.data = input_data.read_data_sets('mnist_train_predict/data_set', one_hot=True)
+        self.data = input_data.read_data_sets('mnist_data', one_hot=True)
 
     def train(self):
         batch_size = 64                             # batch_size 是指每次迭代训练，传入训练的图片张数。
@@ -37,7 +38,7 @@ class Train:
 
         # 开始训练前，检查ckpt文件夹，看是否有checkpoint文件存在。
         # 如果存在，则读取checkpoint文件指向的模型，restore到sess中。
-        ckpt = tf.train.get_checkpoint_state(CKPT_DIR)  # check point
+        ckpt = tf.train.get_checkpoint_state(self.CKPT_DIR)  # check point
                                                         # Returns a CheckpointState if the state was available, None otherwise.
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(self.sess, ckpt.model_checkpoint_path)    # 加载已经训练好的模型
@@ -73,3 +74,7 @@ class Train:
         print("准确率: %.2f，共测试了%d张图片 " % (accuracy, len(test_label)))
 
 
+if __name__ == "__main__":
+    app = Train()
+    app.train()
+    app.calculate_accuracy()

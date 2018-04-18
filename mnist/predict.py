@@ -12,11 +12,12 @@ pillow(PIL) 4.3.0
 输入是28 * 28像素的图片，输出是个具体的数字
 '''
 
-CKPT_DIR = 'ckpt'
+# CKPT_DIR = 'ckpt'
 
 
 class Predict:
-    def __init__(self):
+    def __init__(self, CKPT):
+        self.CKPT_DIR = CKPT
         self.net = Network()
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
@@ -26,7 +27,7 @@ class Predict:
 
     def restore(self):
         saver = tf.train.Saver()                                    # tf.train.Saver是用来保存训练结果的。
-        ckpt = tf.train.get_checkpoint_state(CKPT_DIR)              # check point
+        ckpt = tf.train.get_checkpoint_state(self.CKPT_DIR)              # check point
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(self.sess, ckpt.model_checkpoint_path)    # 加载已经训练好的模型
         else:
@@ -45,3 +46,7 @@ class Predict:
         return np.argmax(y[0])
 
 
+if __name__ == "__main__":
+    app = Predict()
+    for i in range(10):
+        app.predict('test_images/%d.png' %i)

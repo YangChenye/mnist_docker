@@ -11,7 +11,7 @@ from cassandra import ConsistencyLevel
 from cassandra.cluster import Cluster
 from cassandra.query import SimpleStatement
 
-KEYSPACE = "mykeyspaceForMnist"
+KEYSPACE = "mykeyspace_mnist"
 
 def createKeySpace():
     cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
