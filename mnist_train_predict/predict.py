@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-from model import Network
+from mnist_train_predict.model import Network
 
 '''
 python 3.6
