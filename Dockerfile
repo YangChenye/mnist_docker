@@ -1,19 +1,46 @@
-# our base image
-FROM alpine:3.5
+# Use ubuntu as a parent image
+FROM python
 
-# Install python and pip
-RUN apk add --update py2-pip
+# Install python3.6 and pip and clean up the apt cache
+# RUN apt-get update && apt-get install -y \
+#     python3.6 \
+#     python-pip python-dev build-essential \
+#  && rm -rf /var/lib/apt/lists/*
 
-# install Python modules needed by the Python app
-COPY requirements.txt /usr/src/app/
-RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
+# Still install pip
+# RUN pip install --upgrade pip
+# RUN pip install --upgrade virtualenv
 
-# copy files required for the app to run
-COPY app.py /usr/src/app/
-COPY templates/index.html /usr/src/app/templates/
+# Set the working directory to /app
+WORKDIR /usr/src/app
 
-# tell the port number the container should expose
-EXPOSE 5000
+# Install any needed packages specified in requirements.txt
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-# run the application
-CMD ["python", "/usr/src/app/app.py"]
+# Copy the current directory contents into the container at /app
+COPY . .
+
+# Make ports available to the world outside this container
+EXPOSE 80
+EXPOSE 9042
+EXPOSE 9142
+EXPOSE 9242
+EXPOSE 7199
+EXPOSE 9160
+EXPOSE 8778
+EXPOSE 4242
+EXPOSE 8083
+EXPOSE 3000
+EXPOSE 9000
+
+# Define environment variable
+
+
+# Deploy the cassandra cluster first
+# WORKDIR /usr/src/app
+# RUN docker-compose up -d
+
+# Run app.py when the container launches
+WORKDIR /usr/src/app
+CMD ["python", "./main.py"]
