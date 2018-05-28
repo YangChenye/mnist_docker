@@ -14,6 +14,10 @@ FROM python
 # Set the working directory to /app
 WORKDIR /usr/src/app
 
+# Set ssh
+# RUN ssh-keygen –t rsa –P ""
+# RUN cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
 # Install any needed packages specified in requirements.txt
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
@@ -22,17 +26,17 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Make ports available to the world outside this container
-EXPOSE 80
+# EXPOSE 80
 EXPOSE 9042
-EXPOSE 9142
-EXPOSE 9242
-EXPOSE 7199
-EXPOSE 9160
-EXPOSE 8778
-EXPOSE 4242
-EXPOSE 8083
-EXPOSE 3000
-EXPOSE 9000
+# EXPOSE 9142
+# EXPOSE 9242
+# EXPOSE 7199
+# EXPOSE 9160
+# EXPOSE 8778
+# EXPOSE 4242
+# EXPOSE 8083
+# EXPOSE 3000
+# EXPOSE 9000
 
 # Define environment variable
 
@@ -43,4 +47,4 @@ EXPOSE 9000
 
 # Run app.py when the container launches
 WORKDIR /usr/src/app
-CMD ["python", "./main.py"]
+CMD ["python", "./app.py"]
