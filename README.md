@@ -132,9 +132,6 @@ urllib.error.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certifica
 
 问题解决。
 
-
-
-
-
+## 三.&nbsp;学习Docker
 学习官方的[Get started with Docker文档](https://docs.docker.com/get-started/)对docker有一个初步的了解。<br>
 
